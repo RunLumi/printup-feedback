@@ -1,0 +1,141 @@
+name: "📚 Tài liệu / biz-docs"
+description: "Đề xuất sửa, làm rõ hoặc bổ sung tài liệu nghiệp vụ và nguồn sự thật của PrintUp."
+title: "[Tài liệu] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Dùng biểu mẫu này cho `biz-docs`, đặc tả nghiệp vụ, quyết định, tiêu chí nghiệm thu, phân quyền, chỉ số và kế hoạch.
+
+        Nếu thay đổi tài liệu đồng nghĩa với **thay đổi hành vi sản phẩm**, phải ghi rõ để PM áp dụng đúng quy trình thay đổi phạm vi.
+
+  - type: dropdown
+    id: reporter_role
+    attributes:
+      label: "Vai trò người gửi"
+      options:
+        - "QC"
+        - "QA"
+        - "PM"
+        - "Kỹ thuật"
+        - "Thiết kế"
+        - "Vận hành"
+        - "Khác"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: change_type
+    attributes:
+      label: "Loại thay đổi"
+      options:
+        - "Sửa thông tin sai"
+        - "Làm rõ nội dung mơ hồ"
+        - "Bổ sung yêu cầu còn thiếu"
+        - "Giải quyết mâu thuẫn giữa tài liệu và sản phẩm"
+        - "Bổ sung tiêu chí nghiệm thu / kiểm thử"
+        - "Bổ sung quyết định nghiệp vụ"
+        - "Bổ sung quyền / phân quyền"
+        - "Bổ sung chỉ số / đo lường"
+        - "Cập nhật kế hoạch / tiến độ"
+        - "Cải thiện cách trình bày / dễ hiểu"
+        - "Khác"
+    validations:
+      required: true
+
+  - type: input
+    id: document_path
+    attributes:
+      label: "Tài liệu / đường dẫn liên quan"
+      placeholder: "Ví dụ: biz-docs/content/..., SOURCE-REQUIREMENTS.md hoặc URL trang"
+    validations:
+      required: true
+
+  - type: textarea
+    id: current_content
+    attributes:
+      label: "Nội dung hiện tại / vấn đề"
+      description: "Trích phần liên quan hoặc mô tả chính xác điểm sai, thiếu hay mâu thuẫn."
+    validations:
+      required: true
+
+  - type: textarea
+    id: source_of_truth
+    attributes:
+      label: "Căn cứ / bằng chứng"
+      description: "Quyết định của PM/Founder, hành vi đã chốt, hợp đồng, dữ liệu thực tế, issue/PR hoặc nguồn đáng tin cậy nào chứng minh cần thay đổi?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed_change
+    attributes:
+      label: "Nội dung đề xuất"
+      description: "Viết nội dung mong muốn sau khi sửa, hoặc mô tả thay đổi đủ rõ."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: behavior_change
+    attributes:
+      label: "Thay đổi này có làm thay đổi hành vi sản phẩm không?"
+      options:
+        - "Có"
+        - "Không, chỉ sửa tài liệu cho đúng hành vi đã chốt"
+        - "Chưa rõ, cần PM xác nhận"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: impacted_docs
+    attributes:
+      label: "Các phần có thể cần cập nhật đồng bộ"
+      description: "Chọn tất cả mục liên quan."
+      options:
+        - label: "Yêu cầu chức năng (FR)"
+        - label: "Yêu cầu phi chức năng (NFR)"
+        - label: "Tiêu chí nghiệm thu / kiểm thử"
+        - label: "Business rules / trạng thái / ngoại lệ"
+        - label: "Quyền và phân quyền"
+        - label: "Đo lường"
+        - label: "Quyết định / truy vết / phụ thuộc"
+        - label: "Quản lý dự án / kế hoạch"
+        - label: "Kế hoạch tổng thể"
+        - label: "Không mục nào ở trên / chưa rõ"
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: "Ảnh hưởng nếu không sửa"
+      placeholder: "Ví dụ: QA có thể nghiệm thu sai, dev hiểu sai scope, khách hàng thấy thông tin mâu thuẫn..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: "Tiêu chí hoàn thành"
+      placeholder: |
+        - [ ] Nội dung chính đã được sửa
+        - [ ] Các trang liên quan đã đồng bộ
+        - [ ] Không còn mâu thuẫn với ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: related
+    attributes:
+      label: "Liên kết liên quan"
+      placeholder: "Issue, PR, quyết định, màn hình, dữ liệu..."
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: "Xác nhận trước khi gửi"
+      options:
+        - label: "Tôi đã kiểm tra để tránh tạo issue trùng."
+          required: true
+        - label: "Tôi đã phân biệt rõ giữa sửa tài liệu và thay đổi hành vi sản phẩm."
+          required: true
