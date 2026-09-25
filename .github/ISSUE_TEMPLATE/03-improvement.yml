@@ -1,0 +1,152 @@
+name: "🛠️ Cải tiến"
+description: "Đề xuất làm một chức năng, quy trình hoặc hệ thống hiện có tốt hơn."
+title: "[Cải tiến] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Dùng biểu mẫu này khi chức năng hiện tại **vẫn hoạt động**, nhưng có thể tốt hơn về tốc độ, độ rõ ràng, chất lượng, bảo mật, vận hành hoặc khả năng bảo trì.
+
+  - type: dropdown
+    id: reporter_role
+    attributes:
+      label: "Vai trò người gửi"
+      options:
+        - "QC"
+        - "QA"
+        - "PM"
+        - "Kỹ thuật"
+        - "Thiết kế"
+        - "Vận hành"
+        - "Khác"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: improvement_type
+    attributes:
+      label: "Loại cải tiến"
+      options:
+        - "Trải nghiệm người dùng"
+        - "Hiệu năng"
+        - "Độ ổn định / chất lượng"
+        - "Bảo mật"
+        - "Quy trình vận hành"
+        - "Tự động hóa"
+        - "DevEx / CI / khả năng bảo trì"
+        - "Quan sát / log / theo dõi"
+        - "Dữ liệu / báo cáo"
+        - "Chi phí hạ tầng"
+        - "Khác"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: "Khu vực chính"
+      options:
+        - "storefront"
+        - "admin"
+        - "mobile"
+        - "backend_hono"
+        - "biz-docs"
+        - "Báo giá / tính giá"
+        - "Đơn hàng / thanh toán"
+        - "Artwork / duyệt mẫu"
+        - "Sản xuất / QC"
+        - "Giao hàng"
+        - "Tài khoản / phân quyền"
+        - "API / tích hợp"
+        - "Thiết kế / hệ thống giao diện"
+        - "Hạ tầng / DevEx / CI"
+        - "Khác"
+    validations:
+      required: true
+
+  - type: textarea
+    id: current_state
+    attributes:
+      label: "Hiện trạng"
+      description: "Hiện hệ thống/quy trình hoạt động như thế nào? Điểm chưa tốt là gì?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: "Bằng chứng"
+      description: "Số liệu, ảnh/video, phản hồi người dùng, log, ví dụ cụ thể hoặc thời gian thao tác."
+    validations:
+      required: false
+
+  - type: textarea
+    id: desired_state
+    attributes:
+      label: "Trạng thái mong muốn"
+      description: "Sau cải tiến, điều gì phải tốt hơn?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: "Đề xuất cách cải tiến"
+      description: "Không bắt buộc phải đúng hoàn toàn; đội phụ trách có thể chọn cách khác tốt hơn."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: impact
+    attributes:
+      label: "Mức ảnh hưởng hiện tại"
+      options:
+        - "Chặn vận hành / rủi ro lớn"
+        - "Cao"
+        - "Trung bình"
+        - "Thấp"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected_benefit
+    attributes:
+      label: "Lợi ích kỳ vọng"
+      description: "Nếu có thể, dùng con số: thời gian, lỗi, chi phí, tỷ lệ hoàn thành, số bước thao tác..."
+      placeholder: "Ví dụ: giảm 3 bước thao tác; giảm thời gian từ 5 phút xuống 2 phút..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: "Tiêu chí chấp nhận"
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: risks
+    attributes:
+      label: "Rủi ro / ảnh hưởng phụ cần lưu ý"
+      placeholder: "Hồi quy, migration, quyền truy cập, dữ liệu cũ, mobile, API..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: related
+    attributes:
+      label: "Liên kết liên quan"
+      placeholder: "Issue, PR, biz-docs, màn hình, tài liệu..."
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: "Xác nhận trước khi gửi"
+      options:
+        - label: "Tôi đã kiểm tra để tránh tạo issue trùng."
+          required: true
