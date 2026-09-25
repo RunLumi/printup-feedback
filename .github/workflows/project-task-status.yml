@@ -2,34 +2,41 @@ name: Project task status labels
 
 on:
   issues:
-    types: [opened, edited, reopened]
+    types: [opened, edited, reopened, labeled]
 
 permissions:
   contents: read
   issues: write
 
 jobs:
-  sync-status-label:
+  sync-task-labels:
     if: startsWith(github.event.issue.title, '[')
     runs-on: ubuntu-latest
     steps:
-      - name: Parse task and status
+      - name: Parse task metadata
         id: parse
         shell: bash
         run: |
           python - <<'PY'
-          import json, os, re
+          import json, os, re, unicodedata
           event = json.load(open(os.environ["GITHUB_EVENT_PATH"], encoding="utf-8"))
           issue = event["issue"]
           title = issue.get("title") or ""
           body = issue.get("body") or ""
+          action = event.get("action") or ""
 
           task = re.match(r"^\[((?:P|V\d+|M\d+)-\d+)\]", title, re.I)
-          status = re.search(r"###\s+Trạng thái công việc\s*\n+\s*([^\n]+)", body, re.I)
-          if not task or not status:
+          if not task:
               raise SystemExit(0)
 
-          value = status.group(1).strip()
+          def field(label):
+              m = re.search(rf"###\s+{re.escape(label)}\s*\n+\s*([^\n]+)", body, re.I)
+              return m.group(1).strip() if m else ""
+
+          body_status = field("Trạng thái công việc")
+          release = field("Release")
+          area = field("Nhóm / khu vực")
+
           mapping = {
               "To do": "status:todo",
               "Doing": "status:doing",
@@ -37,22 +44,38 @@ jobs:
               "Bug/Rework": "status:bug-rework",
               "Done": "status:done",
           }
-          label = mapping.get(value)
-          if not label:
-              raise SystemExit(0)
 
-          out = os.environ["GITHUB_OUTPUT"]
-          with open(out, "a", encoding="utf-8") as f:
+          # A directly added status:* label wins over the stale form body.
+          event_label = ((event.get("label") or {}).get("name") or "").strip()
+          status_label = event_label if action == "labeled" and event_label.startswith("status:") else mapping.get(body_status, "")
+
+          release_label = ""
+          if release:
+              release_label = "release:" + release.strip().lower()
+
+          def slug(value):
+              value = unicodedata.normalize("NFKD", value)
+              value = "".join(ch for ch in value if not unicodedata.combining(ch))
+              value = value.lower()
+              value = re.sub(r"[^a-z0-9]+", "-", value).strip("-")
+              return value[:40]
+
+          area_label = "area:" + slug(area) if area else ""
+
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
               f.write(f"task={task.group(1).upper()}\n")
-              f.write(f"status={value}\n")
-              f.write(f"label={label}\n")
+              f.write(f"status_label={status_label}\n")
+              f.write(f"release_label={release_label}\n")
+              f.write(f"area_label={area_label}\n")
           PY
 
-      - name: Ensure labels exist
-        if: steps.parse.outputs.label != ''
+      - name: Ensure standard labels exist
+        if: steps.parse.outputs.task != ''
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
+          RELEASE_LABEL: ${{ steps.parse.outputs.release_label }}
+          AREA_LABEL: ${{ steps.parse.outputs.area_label }}
         run: |
           gh label create "project-task" --repo "$REPO" --color "344054" --description "Task trong kế hoạch dự án PrintUp" --force
           gh label create "status:todo" --repo "$REPO" --color "98A2B3" --description "Chưa bắt đầu" --force
@@ -60,16 +83,38 @@ jobs:
           gh label create "status:ready-for-test" --repo "$REPO" --color "F79009" --description "Chờ kiểm tra/phê duyệt" --force
           gh label create "status:bug-rework" --repo "$REPO" --color "D92D20" --description "Không đạt kiểm tra, cần sửa lại" --force
           gh label create "status:done" --repo "$REPO" --color "12B76A" --description "Đã kiểm tra và hoàn tất" --force
+          if [ -n "$RELEASE_LABEL" ]; then
+            gh label create "$RELEASE_LABEL" --repo "$REPO" --color "6172F3" --description "Mốc phát hành dự án" --force
+          fi
+          if [ -n "$AREA_LABEL" ]; then
+            gh label create "$AREA_LABEL" --repo "$REPO" --color "7F56D9" --description "Nhóm công việc dự án" --force
+          fi
 
-      - name: Apply one status label
-        if: steps.parse.outputs.label != ''
+      - name: Apply project, release and area labels
+        if: steps.parse.outputs.task != ''
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
           ISSUE: ${{ github.event.issue.number }}
-          STATUS_LABEL: ${{ steps.parse.outputs.label }}
+          RELEASE_LABEL: ${{ steps.parse.outputs.release_label }}
+          AREA_LABEL: ${{ steps.parse.outputs.area_label }}
+        run: |
+          args=(--add-label "project-task")
+          [ -n "$RELEASE_LABEL" ] && args+=(--add-label "$RELEASE_LABEL")
+          [ -n "$AREA_LABEL" ] && args+=(--add-label "$AREA_LABEL")
+          gh issue edit "$ISSUE" --repo "$REPO" "${args[@]}"
+
+      - name: Keep exactly one status label
+        if: steps.parse.outputs.status_label != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          ISSUE: ${{ github.event.issue.number }}
+          STATUS_LABEL: ${{ steps.parse.outputs.status_label }}
         run: |
           for label in "status:todo" "status:doing" "status:ready-for-test" "status:bug-rework" "status:done"; do
-            gh issue edit "$ISSUE" --repo "$REPO" --remove-label "$label" >/dev/null 2>&1 || true
+            if [ "$label" != "$STATUS_LABEL" ]; then
+              gh issue edit "$ISSUE" --repo "$REPO" --remove-label "$label" >/dev/null 2>&1 || true
+            fi
           done
-          gh issue edit "$ISSUE" --repo "$REPO" --add-label "project-task" --add-label "$STATUS_LABEL"
+          gh issue edit "$ISSUE" --repo "$REPO" --add-label "$STATUS_LABEL"
