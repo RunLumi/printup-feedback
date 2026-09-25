@@ -1,0 +1,159 @@
+name: "🎨 Thiết kế / UX"
+description: "Ghi nhận vấn đề hoặc đề xuất về giao diện, luồng thao tác, responsive và khả năng tiếp cận."
+title: "[Thiết kế] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Hãy mô tả **nhiệm vụ người dùng đang cố hoàn thành** và điểm gây khó khăn. Ảnh chụp hoặc video thường giúp xử lý nhanh hơn rất nhiều.
+
+  - type: dropdown
+    id: reporter_role
+    attributes:
+      label: "Vai trò người gửi"
+      options:
+        - "QC"
+        - "QA"
+        - "PM"
+        - "Kỹ thuật"
+        - "Thiết kế"
+        - "Vận hành"
+        - "Khác"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: "Khu vực giao diện"
+      options:
+        - "storefront"
+        - "admin"
+        - "mobile"
+        - "biz-docs"
+        - "Email / thông báo"
+        - "Thành phần dùng chung / design system"
+        - "Khác"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: design_issue_type
+    attributes:
+      label: "Loại vấn đề"
+      options:
+        - "Luồng thao tác / UX"
+        - "Bố cục / khoảng cách"
+        - "Kiểu chữ / khả năng đọc"
+        - "Màu sắc / tương phản"
+        - "Responsive"
+        - "Trạng thái loading / empty / error"
+        - "Thông báo / nội dung chữ"
+        - "Khả năng tiếp cận"
+        - "Không nhất quán với hệ thống thiết kế"
+        - "Cải tiến trực quan"
+        - "Khác"
+    validations:
+      required: true
+
+  - type: textarea
+    id: user_task
+    attributes:
+      label: "Người dùng đang cố làm gì?"
+      placeholder: "Ví dụ: nhân viên QC cần duyệt artwork trên điện thoại trước khi đưa đơn sang sản xuất."
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: "Vấn đề hiện tại"
+      description: "Điểm nào làm người dùng chậm, nhầm, không thấy, không hiểu hoặc khó thao tác?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: "Ảnh / video / liên kết thiết kế"
+      description: "Kéo thả ảnh, video hoặc dán URL Figma, màn hình hiện tại, trang biz-docs liên quan."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: devices
+    attributes:
+      label: "Thiết bị / kích thước bị ảnh hưởng"
+      multiple: true
+      options:
+        - "Điện thoại"
+        - "Máy tính bảng"
+        - "Laptop / desktop"
+        - "Tất cả"
+        - "Chưa rõ"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: "Trải nghiệm mong muốn"
+      description: "Người dùng nên nhìn thấy, hiểu hoặc thao tác như thế nào?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: "Đề xuất thiết kế"
+      description: "Không bắt buộc. Có thể mô tả hoặc đính kèm mockup."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: impact
+    attributes:
+      label: "Mức ảnh hưởng"
+      options:
+        - "Chặn hoàn thành tác vụ"
+        - "Cao"
+        - "Trung bình"
+        - "Thấp"
+    validations:
+      required: true
+
+  - type: textarea
+    id: states
+    attributes:
+      label: "Trạng thái / trường hợp cần xem xét"
+      placeholder: "Loading, empty, error, disabled, permission denied, dữ liệu dài, màn hình nhỏ..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: "Tiêu chí chấp nhận"
+      placeholder: |
+        - [ ] Luồng chính rõ ràng và hoàn tất được
+        - [ ] Hiển thị đúng trên ...
+        - [ ] Có trạng thái ... phù hợp
+        - [ ] Không làm giảm khả năng tiếp cận
+    validations:
+      required: true
+
+  - type: textarea
+    id: related
+    attributes:
+      label: "Liên kết liên quan"
+      placeholder: "Issue, PR, DESIGN.md, Figma, biz-docs..."
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: "Xác nhận trước khi gửi"
+      options:
+        - label: "Tôi đã kiểm tra để tránh tạo issue trùng."
+          required: true
