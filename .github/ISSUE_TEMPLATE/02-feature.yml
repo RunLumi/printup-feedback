@@ -1,0 +1,173 @@
+name: "✨ Tính năng mới"
+description: "Đề xuất khả năng mới dựa trên vấn đề hoặc nhu cầu người dùng cụ thể."
+title: "[Tính năng] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Hãy mô tả **vấn đề cần giải quyết** trước khi mô tả tính năng. PM sẽ quyết định phạm vi và thứ tự ưu tiên.
+
+  - type: dropdown
+    id: reporter_role
+    attributes:
+      label: "Vai trò người gửi"
+      options:
+        - "QC"
+        - "QA"
+        - "PM"
+        - "Kỹ thuật"
+        - "Thiết kế"
+        - "Vận hành"
+        - "Khác"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: "Khu vực chính"
+      options:
+        - "storefront"
+        - "admin"
+        - "mobile"
+        - "backend_hono"
+        - "biz-docs"
+        - "Báo giá / tính giá"
+        - "Đơn hàng / thanh toán"
+        - "Artwork / duyệt mẫu"
+        - "Sản xuất / QC"
+        - "Giao hàng"
+        - "Tài khoản / phân quyền"
+        - "API / tích hợp"
+        - "Thiết kế / hệ thống giao diện"
+        - "Hạ tầng / DevEx / CI"
+        - "Khác"
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: "Vấn đề / nhu cầu cần giải quyết"
+      description: "Ai đang gặp vấn đề gì, trong tình huống nào, và hậu quả là gì?"
+      placeholder: "Người dùng ..., khi ..., hiện phải ..., dẫn đến ..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: users
+    attributes:
+      label: "Ai sẽ sử dụng?"
+      placeholder: "Ví dụ: khách B2B, nhân viên kinh doanh, kế toán, QC, quản lý sản xuất..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: current_workaround
+    attributes:
+      label: "Cách xử lý hiện tại"
+      description: "Hiện người dùng đang giải quyết bằng cách nào? Có phải dùng Excel, chat, thao tác tay hoặc bỏ qua?"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: frequency
+    attributes:
+      label: "Nhu cầu xuất hiện thường xuyên đến mức nào?"
+      options:
+        - "Hàng ngày"
+        - "Hàng tuần"
+        - "Hàng tháng"
+        - "Không thường xuyên nhưng ảnh hưởng lớn"
+        - "Chưa có dữ liệu"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: impact
+    attributes:
+      label: "Ảnh hưởng nếu chưa có tính năng"
+      options:
+        - "Chặn vận hành / mất doanh thu / rủi ro lớn"
+        - "Cao"
+        - "Trung bình"
+        - "Thấp"
+    validations:
+      required: true
+
+  - type: textarea
+    id: outcome
+    attributes:
+      label: "Kết quả mong muốn"
+      description: "Mô tả kết quả, chưa cần chốt cách xây."
+      placeholder: "Sau thay đổi, người dùng có thể ... mà không cần ..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: "Giải pháp đề xuất"
+      description: "Không bắt buộc. Nếu có ý tưởng cụ thể, mô tả ở đây."
+    validations:
+      required: false
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: "Phạm vi tối thiểu cần có"
+      description: "Phiên bản nhỏ nhất vẫn giải quyết được vấn đề là gì?"
+      placeholder: |
+        Cần có:
+        - ...
+
+        Chưa cần:
+        - ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: success
+    attributes:
+      label: "Cách đo thành công"
+      description: "Chỉ số hoặc quan sát nào chứng minh tính năng có giá trị?"
+      placeholder: "Ví dụ: giảm thời gian thao tác từ ... xuống ..., giảm ...%, hoàn tất luồng mà không cần ..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: "Tiêu chí chấp nhận"
+      placeholder: |
+        - [ ] Người dùng ... có thể ...
+        - [ ] Hệ thống xử lý ...
+        - [ ] Trường hợp ... được xử lý rõ ràng
+    validations:
+      required: true
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: "Phụ thuộc / rủi ro / khu vực liên quan"
+      placeholder: "API, dữ liệu, pháp lý, thanh toán, biz-docs, mobile, migration..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: "Bằng chứng và tài liệu tham khảo"
+      description: "Phản hồi khách hàng, ảnh/video, dữ liệu, tài liệu nghiệp vụ, thiết kế, issue liên quan."
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: "Xác nhận trước khi gửi"
+      options:
+        - label: "Tôi đã kiểm tra để tránh tạo issue trùng."
+          required: true
+        - label: "Tôi đã mô tả vấn đề cần giải quyết, không chỉ mô tả một nút hoặc màn hình muốn thêm."
+          required: true
