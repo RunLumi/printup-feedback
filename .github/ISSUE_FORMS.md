@@ -75,3 +75,20 @@ Một issue được coi là hoàn tất khi:
 - tài liệu liên quan được cập nhật nếu hành vi nghiệp vụ thay đổi;
 - có liên kết PR/commit hoặc bằng chứng tương đương;
 - không còn câu hỏi mở ảnh hưởng đến việc sử dụng thực tế.
+
+
+## Công việc trong kế hoạch dự án
+
+Với task có mã như `P-003`, `V1-12`, `V2-04`:
+
+1. Tạo issue bằng biểu mẫu **Cập nhật công việc dự án**.
+2. Giữ mã task ở đầu tiêu đề, ví dụ `[V1-12] Tích hợp SePay`.
+3. Workflow sẽ gắn một trong các label:
+   - `status:todo`
+   - `status:doing`
+   - `status:ready-for-test`
+   - `status:bug-rework`
+   - `status:done`
+4. Trang **Dự án 1 trang** của PrintUp đọc issue này và hiển thị trạng thái/label ngược lại.
+
+Sau khi issue đã tồn tại, có thể đổi **status label** trực tiếp trên GitHub để cập nhật trạng thái hiển thị. Chỉ dùng **Done** sau khi QA/PM hoặc người duyệt được chỉ định đã xác nhận đạt tiêu chí chấp nhận.
