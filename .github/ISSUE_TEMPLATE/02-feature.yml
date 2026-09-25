@@ -169,5 +169,7 @@ body:
       options:
         - label: "Tôi đã kiểm tra để tránh tạo issue trùng."
           required: true
+        - label: "Tôi đã loại bỏ mật khẩu, token và dữ liệu nhạy cảm không cần thiết."
+          required: true
         - label: "Tôi đã mô tả vấn đề cần giải quyết, không chỉ mô tả một nút hoặc màn hình muốn thêm."
           required: true
