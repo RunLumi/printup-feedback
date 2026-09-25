@@ -118,3 +118,20 @@ jobs:
             fi
           done
           gh issue edit "$ISSUE" --repo "$REPO" --add-label "$STATUS_LABEL"
+
+      - name: Sync GitHub open/closed state
+        if: steps.parse.outputs.status_label != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          ISSUE: ${{ github.event.issue.number }}
+          STATUS_LABEL: ${{ steps.parse.outputs.status_label }}
+        run: |
+          if [ "$STATUS_LABEL" = "status:done" ]; then
+            gh issue close "$ISSUE" --repo "$REPO" --reason completed
+          else
+            state="$(gh issue view "$ISSUE" --repo "$REPO" --json state --jq .state)"
+            if [ "$state" = "CLOSED" ]; then
+              gh issue reopen "$ISSUE" --repo "$REPO"
+            fi
+          fi
