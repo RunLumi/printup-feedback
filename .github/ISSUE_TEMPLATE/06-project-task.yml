@@ -1,0 +1,76 @@
+name: "📋 Cập nhật công việc dự án"
+description: "Tạo hoặc cập nhật issue theo một task trong kế hoạch PrintUp (P-xxx, V1-xx, V2-xx, V3-xx, M5-xx)."
+title: "[TASK-ID] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Issue này liên kết trực tiếp với bảng **Dự án 1 trang** của PrintUp.
+
+        **Giữ mã task ở đầu tiêu đề**, ví dụ `[V1-12] Tích hợp SePay`. Dashboard dùng mã này để nối Issue ↔ task.
+
+  - type: dropdown
+    id: status
+    attributes:
+      label: "Trạng thái công việc"
+      description: "Đây là trạng thái được đọc ngược về bảng quản lý dự án."
+      options:
+        - "To do"
+        - "Doing"
+        - "Ready for test"
+        - "Bug/Rework"
+        - "Done"
+    validations:
+      required: true
+
+  - type: textarea
+    id: update
+    attributes:
+      label: "Cập nhật"
+      description: "Đã làm gì, còn gì, hoặc vấn đề cần xử lý?"
+      placeholder: |
+        Đã làm:
+        - ...
+
+        Còn lại:
+        - ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: "Bằng chứng"
+      description: "PR, commit, URL, ảnh/video, log đã che dữ liệu nhạy cảm, kết quả test..."
+      placeholder: "PR #..., commit ..., test ..., URL ..."
+    validations:
+      required: false
+
+  - type: input
+    id: reviewer
+    attributes:
+      label: "Người kiểm tra / phê duyệt"
+      placeholder: "Ví dụ: QA + PM, Kế toán, Production Approver"
+    validations:
+      required: false
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: "Kết quả kiểm tra / tiêu chí chấp nhận"
+      placeholder: |
+        - [ ] Luồng chính đạt
+        - [ ] Trường hợp biên đạt
+        - [ ] Không có hồi quy nghiêm trọng
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: "Xác nhận"
+      options:
+        - label: "Mã task trong tiêu đề đúng với bảng quản lý dự án."
+          required: true
+        - label: "Tôi đã loại bỏ mật khẩu, token và dữ liệu nhạy cảm không cần thiết."
+          required: true
