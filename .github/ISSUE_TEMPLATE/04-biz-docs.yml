@@ -137,5 +137,7 @@ body:
       options:
         - label: "Tôi đã kiểm tra để tránh tạo issue trùng."
           required: true
+        - label: "Tôi đã loại bỏ mật khẩu, token và dữ liệu nhạy cảm không cần thiết."
+          required: true
         - label: "Tôi đã phân biệt rõ giữa sửa tài liệu và thay đổi hành vi sản phẩm."
           required: true
