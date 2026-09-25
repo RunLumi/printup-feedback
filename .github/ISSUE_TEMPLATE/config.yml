@@ -1,0 +1,6 @@
+blank_issues_enabled: false
+
+contact_links:
+  - name: "Hướng dẫn gửi và xử lý đề xuất nội bộ"
+    url: "https://github.com/RunLumi/printup-feedback/blob/main/.github/ISSUE_TEMPLATE/README.md"
+    about: "Đọc quy ước chọn biểu mẫu, mức ảnh hưởng, bằng chứng và tiêu chí đóng issue."
