@@ -1,0 +1,198 @@
+name: "🐞 Lỗi / Bug"
+description: "Báo lỗi chức năng, dữ liệu, hồi quy, hiệu năng hoặc hành vi không đúng."
+title: "[Lỗi] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Cảm ơn bạn đã ghi nhận lỗi. Hãy cung cấp đủ thông tin để QA/QC có thể xác minh và đội xử lý có thể tái hiện mà không phải đoán.
+
+        **Không đưa mật khẩu, token, dữ liệu thanh toán hoặc dữ liệu cá nhân nhạy cảm vào issue.**
+
+  - type: dropdown
+    id: reporter_role
+    attributes:
+      label: "Vai trò người gửi"
+      options:
+        - "QC"
+        - "QA"
+        - "PM"
+        - "Kỹ thuật"
+        - "Thiết kế"
+        - "Vận hành"
+        - "Khác"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: "Khu vực bị ảnh hưởng"
+      options:
+        - "storefront"
+        - "admin"
+        - "mobile"
+        - "backend_hono"
+        - "biz-docs"
+        - "Báo giá / tính giá"
+        - "Đơn hàng / thanh toán"
+        - "Artwork / duyệt mẫu"
+        - "Sản xuất / QC"
+        - "Giao hàng"
+        - "Tài khoản / phân quyền"
+        - "API / tích hợp"
+        - "Thiết kế / hệ thống giao diện"
+        - "Hạ tầng / DevEx / CI"
+        - "Bảo mật"
+        - "Hiệu năng"
+        - "Khác"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: "Môi trường"
+      options:
+        - "Production"
+        - "Dev"
+        - "Staging / Preview"
+        - "Local"
+        - "Không áp dụng / Chưa rõ"
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: "Phiên bản / commit / URL liên quan"
+      description: "Dán URL màn hình, commit SHA, PR, bản build hoặc phiên bản ứng dụng nếu có."
+      placeholder: "Ví dụ: https://..., commit abc123, iOS 1.2.0"
+    validations:
+      required: false
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: "Tóm tắt lỗi"
+      description: "Mô tả ngắn gọn điều gì đang sai và ai bị ảnh hưởng."
+      placeholder: "Khi ..., hệ thống ..., khiến ..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: preconditions
+    attributes:
+      label: "Điều kiện trước khi xảy ra lỗi"
+      description: "Tài khoản, quyền, dữ liệu, trạng thái đơn hàng hoặc cấu hình cần có để tái hiện."
+      placeholder: |
+        - Vai trò người dùng:
+        - Trạng thái dữ liệu:
+        - Điều kiện đặc biệt:
+    validations:
+      required: false
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: "Các bước tái hiện"
+      placeholder: |
+        1. Mở ...
+        2. Chọn ...
+        3. Nhập ...
+        4. Nhấn ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: "Kết quả thực tế"
+      description: "Hệ thống hiện đang làm gì?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: "Kết quả mong đợi"
+      description: "Theo nghiệp vụ hoặc thiết kế, hệ thống đúng phải làm gì?"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: impact
+    attributes:
+      label: "Mức ảnh hưởng"
+      description: "Đánh giá mức độ ảnh hưởng, không phải thứ tự ưu tiên backlog."
+      options:
+        - "Chặn vận hành"
+        - "Cao"
+        - "Trung bình"
+        - "Thấp"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: frequency
+    attributes:
+      label: "Tần suất"
+      options:
+        - "Luôn xảy ra"
+        - "Thường xuyên"
+        - "Thỉnh thoảng"
+        - "Chỉ gặp một lần"
+        - "Chưa xác định"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: regression
+    attributes:
+      label: "Đây có phải lỗi hồi quy?"
+      description: "Trước đây chức năng này có hoạt động đúng không?"
+      options:
+        - "Có"
+        - "Không"
+        - "Không rõ"
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: "Bằng chứng"
+      description: "Kéo thả ảnh/video, dán log đã che dữ liệu nhạy cảm, mã đơn hàng thử nghiệm hoặc liên kết liên quan."
+      placeholder: "Ảnh chụp, video, log, URL, dữ liệu kiểm thử..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: "Tiêu chí xác nhận đã sửa"
+      description: "QA/QC sẽ kiểm tra điều gì để đóng issue?"
+      placeholder: |
+        - [ ] Luồng chính cho kết quả đúng
+        - [ ] Trường hợp biên ... đã được kiểm tra
+        - [ ] Không làm hỏng ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: related
+    attributes:
+      label: "Issue / PR / tài liệu liên quan"
+      placeholder: "Liên kết biz-docs, issue cũ, PR, thiết kế..."
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: "Xác nhận trước khi gửi"
+      options:
+        - label: "Tôi đã kiểm tra để tránh tạo issue trùng."
+          required: true
+        - label: "Tôi đã loại bỏ mật khẩu, token và dữ liệu nhạy cảm không cần thiết."
+          required: true
